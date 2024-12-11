@@ -2,7 +2,6 @@ from typing import Dict, List, Type, Union
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class VanillaPINN(nn.Module):
@@ -48,5 +47,4 @@ class VanillaPINN(nn.Module):
             raise TypeError('x must be a Tensor or a list of Tensors')
 
         z = self.net(z)
-        z = F.sigmoid(z)
         return {output: z[:, i].view(-1, 1) for i, output in enumerate(self.output_names)}
