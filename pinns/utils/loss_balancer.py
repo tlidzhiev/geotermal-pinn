@@ -30,7 +30,13 @@ class LossBalancer:
         grad_norms = np.zeros_like(self.lambdas, dtype=np.float32)
         with torch.no_grad():
             for i, loss in enumerate(losses):
-                loss_grads = pinns.utils.gradient(loss, model.parameters(), create_graph=False, retain_graph=True)
+                loss_grads = pinns.utils.gradient(
+                    loss,
+                    model.parameters(),
+                    create_graph=False,
+                    retain_graph=True,
+                    allow_unused=True,
+                )
                 grad_norm = torch.sqrt(sum(torch.sum(g * g) for g in loss_grads))
                 grad_norms[i] = grad_norm.item()
         sum_grad_norms = np.sum(grad_norms)
