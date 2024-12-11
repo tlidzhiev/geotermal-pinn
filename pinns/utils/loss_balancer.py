@@ -31,8 +31,8 @@ class LossBalancer:
         with torch.no_grad():
             for i, loss in enumerate(losses):
                 loss_grads = pinns.utils.gradient(
-                    loss,
-                    model.parameters(),
+                    outputs=loss,
+                    inputs=list(model.parameters()),
                     create_graph=False,
                     retain_graph=True,
                     allow_unused=True,
